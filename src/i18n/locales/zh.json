@@ -15,5 +15,35 @@
       "dark": "深色",
       "system": "系统"
     }
+  },
+  "receive": {
+    "label": "接收文件",
+    "description": "从局域网中的其他设备接收文件",
+    "waitingForFiles": "等待接收文件",
+    "instruction": "请在其他设备上选择此设备以发送文件",
+    "deviceName": "设备名称",
+    "deviceNamePlaceholder": "设备名称将在此显示",
+    "deviceIp": "设备IP",
+    "deviceIpPlaceholder": "设备IP将在此显示"
+  },
+  "receiveProgress": {
+    "label": "正在接收文件",
+    "description": "当前正在从其他设备接收文件",
+    "senderInfo": {
+      "title": "发送端信息",
+      "name": "设备名称",
+      "namePlaceholder": "发送端名称将在此显示",
+      "ip": "设备IP",
+      "ipPlaceholder": "发送端IP将在此显示"
+    },
+    "overallProgress": "总体进度",
+    "fileList": {
+      "title": "文件列表",
+      "cancel": "取消"
+    },
+    "actions": {
+      "cancelAll": "全部取消",
+      "acceptAll": "全部接受"
+    }
   }
 }

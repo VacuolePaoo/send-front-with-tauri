@@ -12,6 +12,11 @@ const sidebarRoutes = [
     icon: 'ph:house-duotone',
     path: '/home',
   },
+  {
+    name: 'receive.label',
+    icon: 'ph:download-duotone',
+    path: '/receive',
+  },
 ]
 </script>
 

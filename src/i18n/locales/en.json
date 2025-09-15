@@ -15,5 +15,35 @@
       "dark": "Dark",
       "system": "System"
     }
+  },
+  "receive": {
+    "label": "Receive Files",
+    "description": "Receive files from other devices on the local network",
+    "waitingForFiles": "Waiting to Receive Files",
+    "instruction": "Please select this device on other devices to send files",
+    "deviceName": "Device Name",
+    "deviceNamePlaceholder": "Device name will be displayed here",
+    "deviceIp": "Device IP",
+    "deviceIpPlaceholder": "Device IP will be displayed here"
+  },
+  "receiveProgress": {
+    "label": "Receiving Files",
+    "description": "Currently receiving files from another device",
+    "senderInfo": {
+      "title": "Sender Information",
+      "name": "Device Name",
+      "namePlaceholder": "Sender device name will be displayed here",
+      "ip": "Device IP",
+      "ipPlaceholder": "Sender device IP will be displayed here"
+    },
+    "overallProgress": "Overall Progress",
+    "fileList": {
+      "title": "File List",
+      "cancel": "Cancel"
+    },
+    "actions": {
+      "cancelAll": "Cancel All",
+      "acceptAll": "Accept All"
+    }
   }
 }
