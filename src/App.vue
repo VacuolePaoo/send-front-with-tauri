@@ -11,8 +11,8 @@ import { TooltipProvider } from '@/components/ui/tooltip'
     <TooltipProvider>
       <main class="flex">
         <AppSidebar />
-        <section class="bg-background grow p-4">
-          <router-view />
+        <section class="bg-background grow p-4 h-[calc(100vh-4rem)]">
+          <router-view class="h-full" />
         </section>
       </main>
     </TooltipProvider>

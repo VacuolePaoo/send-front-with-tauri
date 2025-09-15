@@ -26,6 +26,11 @@ const routes = [
         component: () => import('@/pages/receive-progress.vue'),
       },
       {
+        path: 'send',
+        name: 'send',
+        component: () => import('@/pages/send.vue'),
+      },
+      {
         path: 'dev',
         name: 'dev',
         component: () => import('@/pages/dev.vue'),

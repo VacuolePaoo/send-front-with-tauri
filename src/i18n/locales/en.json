@@ -26,15 +26,47 @@
     "deviceIp": "Device IP",
     "deviceIpPlaceholder": "Device IP will be displayed here"
   },
+  "send": {
+    "label": "Send Files",
+    "description": "Send files to other devices on the local network",
+    "selectFiles": "Select Files",
+    "selectFolders": "Select Folders",
+    "sendText": "Send Text",
+    "send": "Send",
+    "availableDevices": "Available Devices",
+    "devicePlaceholder": {
+      "name": "Device name will be displayed here",
+      "ip": "Device IP will be displayed here"
+    },
+    "selectedItems": "Selected Items",
+    "clearAll": "Clear All",
+    "file": "File",
+    "folder": "Folder",
+    "text": "Text",
+    "textItemName": "Text {count}",
+    "textPlaceholder": "Please enter the text content to send",
+    "cancel": "Cancel",
+    "add": "Add",
+    "allFiles": "All Files"
+  },
   "receiveProgress": {
     "label": "Receiving Files",
     "description": "Currently receiving files from another device",
+    "connectionInfo": {
+      "title": "Connection Information",
+      "sending": "Sending"
+    },
     "senderInfo": {
-      "title": "Sender Information",
-      "name": "Device Name",
+      "name": "Sender Name",
       "namePlaceholder": "Sender device name will be displayed here",
-      "ip": "Device IP",
+      "ip": "Sender IP",
       "ipPlaceholder": "Sender device IP will be displayed here"
+    },
+    "receiverInfo": {
+      "name": "Receiver Name",
+      "namePlaceholder": "Receiver device name will be displayed here",
+      "ip": "Receiver IP",
+      "ipPlaceholder": "Receiver device IP will be displayed here"
     },
     "overallProgress": "Overall Progress",
     "fileList": {

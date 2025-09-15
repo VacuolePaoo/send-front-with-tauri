@@ -18,6 +18,11 @@ const sidebarRoutes = [
     path: '/receive',
   },
   {
+    name: 'send.label',
+    icon: 'ph:upload-duotone',
+    path: '/send',
+  },
+  {
     name: 'dev.title',
     icon: 'ph:code-duotone',
     path: '/dev',
