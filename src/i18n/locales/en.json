@@ -45,5 +45,21 @@
       "cancelAll": "Cancel All",
       "acceptAll": "Accept All"
     }
+  },
+  "dev": {
+    "title": "Developer Debug",
+    "description": "For debugging and switching between various page states",
+    "navigation": {
+      "title": "Page Navigation",
+      "home": "Home",
+      "receive": "Receive Files",
+      "receiveProgress": "Receive Progress",
+      "settings": "Settings"
+    },
+    "actions": {
+      "title": "Actions",
+      "startReceive": "Start Receiving Files",
+      "startReceiveDesc": "Switch to file receiving state"
+    }
   }
 }

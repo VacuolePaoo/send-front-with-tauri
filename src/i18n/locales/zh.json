@@ -45,5 +45,21 @@
       "cancelAll": "全部取消",
       "acceptAll": "全部接受"
     }
+  },
+  "dev": {
+    "title": "开发者调试",
+    "description": "用于调试和切换各种页面状态",
+    "navigation": {
+      "title": "页面导航",
+      "home": "首页",
+      "receive": "接收文件",
+      "receiveProgress": "接收文件进度",
+      "settings": "设置"
+    },
+    "actions": {
+      "title": "操作",
+      "startReceive": "开始接收文件",
+      "startReceiveDesc": "切换到文件接收状态"
+    }
   }
 }

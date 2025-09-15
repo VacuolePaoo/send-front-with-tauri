@@ -36,7 +36,7 @@ function handleLanguageSelect(newLocale: string) {
 
 <template>
   <div class="container mx-auto">
-    <div class="space-y-0.5 p-10">
+    <div class="space-y-0.5">
       <h2 class="text-2xl font-bold tracking-tight">
         {{ t('settings.label') }}
       </h2>
