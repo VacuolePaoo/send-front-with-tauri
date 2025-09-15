@@ -7,8 +7,8 @@ const messages = Object.fromEntries(
 )
 
 export default createI18n({
-  locale: 'en',
-  fallbackLocale: 'en',
+  locale: 'zh',
+  fallbackLocale: 'zh',
   legacy: false,
   globalInjection: true,
   messages,
