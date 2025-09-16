@@ -1,4 +1,7 @@
 {
+  "app": {
+    "title": "LAN File Transfer"
+  },
   "home": {
     "label": "Home"
   },
