@@ -12,7 +12,11 @@ import { TooltipProvider } from '@/components/ui/tooltip'
       <main class="flex">
         <AppSidebar />
         <section class="bg-background grow p-4 h-[calc(100vh-4rem)]">
-          <router-view class="h-full" />
+          <router-view v-slot="{ Component }" class="h-full">
+            <transition name="page" mode="out-in">
+              <component :is="Component" />
+            </transition>
+          </router-view>
         </section>
       </main>
     </TooltipProvider>

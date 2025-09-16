@@ -6,6 +6,7 @@ import App from './App.vue'
 import i18n from './i18n'
 import router from './router'
 import './assets/css/base.css'
+import './assets/css/transitions.css'
 
 const pinia = createPinia()
 const app = createApp(App)

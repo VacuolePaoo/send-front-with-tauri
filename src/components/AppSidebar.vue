@@ -14,12 +14,12 @@ const sidebarRoutes = [
   },
   {
     name: 'receive.label',
-    icon: 'ph:download-duotone',
+    icon: 'ph:box-arrow-down-duotone',
     path: '/receive',
   },
   {
     name: 'send.label',
-    icon: 'ph:upload-duotone',
+    icon: 'ph:paper-plane-right-duotone',
     path: '/send',
   },
   {
@@ -32,7 +32,7 @@ const sidebarRoutes = [
 
 <template>
   <aside class="flex flex-col h-dvh pb-12 pt-2 px-2 justify-between bg-sidebar">
-    <nav class="grid gap-1">
+    <nav class="grid gap-3">
       <Tooltip v-for="sidebarRoute in sidebarRoutes" :key="sidebarRoute.name">
         <TooltipTrigger as-child>
           <RouterLink :to="sidebarRoute.path">
@@ -43,7 +43,7 @@ const sidebarRoutes = [
               class="rounded-lg"
               :aria-label="t(sidebarRoute.name)"
             >
-              <Icon :icon="sidebarRoute.icon" class="size-5" />
+              <Icon :icon="sidebarRoute.icon" class="size-6" />
             </Button>
           </RouterLink>
         </TooltipTrigger>
