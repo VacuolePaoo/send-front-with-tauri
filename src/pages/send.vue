@@ -7,8 +7,8 @@ import { useI18n } from 'vue-i18n'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
-
 import { Textarea } from '@/components/ui/textarea'
+import { getFileIconInfo } from '@/lib/file-icons'
 
 const { t } = useI18n()
 
@@ -173,18 +173,9 @@ function clearAllItems() {
   selectedItems.value = []
 }
 
-// 获取项目图标
-function getItemIcon(type: string) {
-  switch (type) {
-    case 'file':
-      return 'ph:file-duotone'
-    case 'folder':
-      return 'ph:folder-duotone'
-    case 'text':
-      return 'ph:chat-centered-text-duotone'
-    default:
-      return 'ph:file-duotone'
-  }
+// 获取项目图标信息
+function getItemIconInfo(name: string, type: string) {
+  return getFileIconInfo(name, type)
 }
 </script>
 
@@ -272,8 +263,8 @@ function getItemIcon(type: string) {
             class="p-3 flex items-center"
           >
             <Icon
-              :icon="getItemIcon(item.type)"
-              class="size-5 text-primary mr-3"
+              :icon="getItemIconInfo(item.name, item.type).icon"
+              class="size-5 mr-3" :class="[getItemIconInfo(item.name, item.type).color]"
             />
             <div class="flex-grow min-w-0">
               <div class="font-medium text-sm truncate">
@@ -295,8 +286,6 @@ function getItemIcon(type: string) {
         </div>
       </div>
     </div>
-
-    <Separator class="flex-shrink-0" />
 
     <!-- 设备列表 -->
     <div class="mt-6 flex-grow overflow-hidden flex flex-col">
