@@ -1,97 +1,174 @@
-# 页面与后端接口对接需求
+# 开发文档 (Development Documentation)
 
-### 0. 窗口配置
+## 项目结构
 
-- **窗口最小尺寸限制**
-  - 说明：为避免窗口过小导致内容显示不完整，已配置窗口最小尺寸
-  - 配置：最小宽度800px，最小高度600px
-  - 文件：`src-tauri/tauri.conf.json`
+```
+gui/
+├── src/
+│   ├── assets/           # 静态资源
+│   ├── components/       # 组件
+│   ├── i18n/             # 国际化
+│   ├── lib/              # 工具库和API封装
+│   ├── pages/            # 页面组件
+│   ├── router/           # 路由配置
+│   ├── stores/           # 状态管理
+│   └── App.vue           # 根组件
+└── src-tauri/            # Tauri后端代码
+```
 
----
+## API封装
 
-### 1. 发送文件页面（src/pages/send.vue）
+### 已添加API封装
 
-- **设备列表接口**
-  - 说明：获取当前局域网内可用的设备列表。
-  - 需求：替换前端模拟的 `devices` 数组。
-  - 返回字段：`id`, `name`, `ip`, `status`
-  - 建议接口：`GET /api/devices`
+1. **GatewayAPI** - 网关核心功能API
+   - createGateway(name: string): Promise<string>
+   - createGatewayWithConfig(config: GatewayConfig): Promise<string>
+   - startGateway(gatewayId: string): Promise<void>
+   - stopGateway(gatewayId: string): Promise<void>
+   - getGatewayStats(gatewayId: string): Promise<[number, number]>
+   - mountDirectory(gatewayId: string, name: string, path: string): Promise<void>
+   - broadcastDirectorySearch(gatewayId: string, keywords: string[]): Promise<number>
+   - broadcastInfoMessage(gatewayId: string, content: string): Promise<number>
+   - runPerformanceTest(gatewayId: string, testType: string, dataSize: number): Promise<number>
 
-- **文件/文件夹选择与发送接口**
-  - 说明：将选中的文件/文件夹/文本发送到指定设备。
-  - 需求：点击“发送”按钮时，调用后端接口进行实际传输。
-  - 建议接口：`POST /api/send`，参数包括目标设备ID、文件/文件夹/文本内容等。
+2. **UdpBroadcastAPI** - UDP广播功能API
+   - createManager(localAddr: string): Promise<string>
+   - broadcastToken(managerId: string, token: UdpToken): Promise<number>
+   - sendTokenTo(managerId: string, token: UdpToken, target: string): Promise<void>
+   - mountDirectory(managerId: string, name: string, path: string): Promise<void>
+   - searchFiles(managerId: string, keywords: string[]): Promise<string[]>
 
----
+3. **DirectoryIndexAPI** - 目录索引功能API
+   - generateIndex(path: string): Promise<DirectoryIndex>
+   - saveIndexToFile(index: DirectoryIndex, filePath: string): Promise<void>
+   - loadIndexFromFile(filePath: string): Promise<DirectoryIndex>
+   - searchInIndex(index: DirectoryIndex, keywords: string[]): Promise<string[]>
 
-### 2. 接收文件页面（src/pages/receive.vue）
+4. **RegistryAPI** - 注册表管理API
+   - createRegistry(name: string, address: string): Promise<string>
+   - addOrUpdateEntry(registryId: string, entry: RegistryEntry): Promise<void>
+   - getAllEntries(registryId: string): Promise<RegistryEntry[]>
+   - getEntryByAddress(registryId: string, address: string): Promise<RegistryEntry | null>
+   - removeEntry(registryId: string, address: string): Promise<boolean>
+   - cleanupExpiredEntries(registryId: string, timeoutSeconds: number): Promise<number>
 
-- **本机设备信息接口**
-  - 说明：获取本机设备名称和IP，显示在页面上。
-  - 需求：替换 `{{ t('receive.deviceNamePlaceholder') }}` 和 `{{ t('receive.deviceIpPlaceholder') }}`
-  - 建议接口：`GET /api/device-info`
+5. **PerformanceMonitorAPI** - 性能监控API
+   - createMonitor(): Promise<string>
+   - recordLatency(monitorId: string, operation: string, latency: number): Promise<void>
+   - recordThroughput(monitorId: string, operation: string, bytesPerSecond: number): Promise<void>
+   - generateReport(monitorId: string): Promise<string>
 
----
+### 已添加React Hooks风格封装
 
-### 3. 文件传输状态页面（src/pages/receive-progress.vue）
+1. **useGateway** - 网关Hook
+2. **useUdpBroadcast** - UDP广播Hook
+3. **useRegistry** - 注册表Hook
+4. **usePerformanceMonitor** - 性能监控Hook
 
-- **发送端/接收端设备信息接口**
-  - 说明：获取当前传输会话中，发送端和接收端的设备名称与IP。
-  - 需求：替换 `senderInfo` 和 `receiverInfo` 的占位符。
-  - 建议接口：`GET /api/transfer/session-info`
+## 国际化
 
-- **文件列表与进度接口**
-  - 说明：获取当前正在传输的文件列表及每个文件的进度。
-  - 需求：替换 `fileList` 数组和每个文件的 `progress` 字段。
-  - 建议接口：`GET /api/transfer/files`，返回每个文件的 `id`, `name`, `size`, `type`, `progress`
+### 语言文件
 
-- **总体进度接口**
-  - 说明：获取所有文件的总体传输进度。
-  - 需求：替换页面底部进度条的进度值。
-  - 建议接口：可与上面接口合并，或单独 `GET /api/transfer/progress`
+- `zh.json` - 中文语言包
+- `en.json` - 英文语言包
 
-- **操作类接口**
-  - 说明：取消单个文件/全部文件的传输、全部接收等。
-  - 建议接口：
-    - 取消单个文件：`POST /api/transfer/cancel-file`
-    - 取消全部：`POST /api/transfer/cancel-all`
-    - 全部接收：`POST /api/transfer/accept-all`
+### 使用方法
 
----
+```vue
+<script setup>
+import { useI18n } from 'vue-i18n'
 
-### 4. 设置页面（src/pages/settings.vue）
+const { t } = useI18n()
+</script>
 
-- **语言/主题设置**
-  - 目前为本地存储，无需后端接口，除非有云同步需求。
+<template>
+  <h1>{{ t('home.label') }}</h1>
+</template>
+```
 
----
+## 组件库
 
-### 5. 发送页面文件图标映射功能
+使用 [shadcn-vue](https://www.shadcn-vue.com/) 组件库，基于 [Radix Vue](https://www.radix-vue.com/) 和 [Tailwind CSS](https://tailwindcss.com/)。
 
-- **功能描述**
-  - 为发送页面的文件列表添加了文件类型图标与格式映射功能，根据文件扩展名显示对应类型的图标，提高用户体验和文件类型识别度。
+### 已安装组件
 
-- **实现细节**
-  - 创建了 `src/lib/file-icons.ts` 文件，定义了文件类型图标映射逻辑
-  - 支持多种常见文件格式，包括：
-    - 文档文件 (doc, docx, pdf, txt等)
-    - 表格文件 (xls, xlsx, csv等)
-    - 演示文稿 (ppt, pptx等)
-    - 图片文件 (jpg, png, gif, svg等)
-    - 音视频文件 (mp3, mp4, avi等)
-    - 压缩文件 (zip, rar, 7z等)
-    - 代码文件 (js, ts, html, css, vue等)
-    - 可执行文件 (exe, app等)
-    - 数据库文件 (db, sqlite等)
-  - 为每种文件类型提供了专门的图标和颜色
-  - 修改了 `src/pages/send.vue` 页面，使用新的图标映射功能
+- Accordion
+- Alert
+- AlertDialog
+- AspectRatio
+- AutoForm
+- Avatar
+- Badge
+- Breadcrumb
+- Button
+- Calendar
+- Card
+- Carousel
+- Chart
+- Checkbox
+- Collapsible
+- Combobox
+- Command
+- ContextMenu
+- Dialog
+- Drawer
+- DropdownMenu
+- Form
+- HoverCard
+- Input
+- Label
+- Menubar
+- NavigationMenu
+- NumberField
+- Pagination
+- PinInput
+- Popover
+- Progress
+- RadioGroup
+- RangeCalendar
+- Resizable
+- ScrollArea
+- Select
+- Separator
+- Sheet
+- Sidebar
+- Skeleton
+- Slider
+- Sonner
+- Stepper
+- Switch
+- Table
+- Tabs
+- TagsInput
+- Textarea
+- Toggle
+- ToggleGroup
+- Tooltip
 
-- **文件变更**
-  - 新增: `src/lib/file-icons.ts` - 文件图标映射逻辑
-  - 修改: `src/pages/send.vue` - 使用文件图标映射功能
+## 路由
 
-- **图标映射规则**
-  - 文件夹使用黄色文件夹图标
-  - 文本内容使用蓝色对话图标
-  - 其他文件根据扩展名匹配对应图标和颜色
-  - 未匹配到的文件使用默认灰色文件图标
+路由配置在 `src/router/index.ts` 文件中。
+
+### 当前路由
+
+- `/` - 首页（接收文件）
+- `/send` - 发送文件
+- `/settings` - 设置
+- `/dev` - 开发工具
+
+## 状态管理
+
+使用 [Pinia](https://pinia.vuejs.org/) 进行状态管理。
+
+### 当前Store
+
+- `settings` - 应用设置
+
+## 样式
+
+使用 [Tailwind CSS](https://tailwindcss.com/) 进行样式设计。
+
+### 主题
+
+- light - 浅色主题
+- dark - 深色主题
