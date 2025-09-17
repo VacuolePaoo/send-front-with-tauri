@@ -13,11 +13,6 @@ const sidebarRoutes = [
     path: '/home',
   },
   {
-    name: 'receive.label',
-    icon: 'ph:box-arrow-down-duotone',
-    path: '/receive',
-  },
-  {
     name: 'send.label',
     icon: 'ph:paper-plane-right-duotone',
     path: '/send',

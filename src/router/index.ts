@@ -16,11 +16,6 @@ const routes = [
         component: () => import('@/pages/settings.vue'),
       },
       {
-        path: 'receive',
-        name: 'receive',
-        component: () => import('@/pages/receive.vue'),
-      },
-      {
         path: 'receive-progress',
         name: 'receive-progress',
         component: () => import('@/pages/receive-progress.vue'),
