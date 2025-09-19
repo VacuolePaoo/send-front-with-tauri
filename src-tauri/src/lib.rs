@@ -1,5 +1,9 @@
+mod autostart;
+
+use autostart::{change_autostart, enable_autostart};
 use plugins::logging;
 use tauri::Manager;
+use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_decorum::WebviewWindowExt;
 
 pub mod plugins;
@@ -50,5 +54,26 @@ pub fn run() {
             Ok(())
         })
         .run(tauri::generate_context!())
+        .expect("error while running tauri application");
+}
+
+#[cfg_attr(mobile, tauri::mobile_entry_point)]
+pub fn run() {
+    let mut ctx = tauri::generate_context!();
+
+    tauri::Builder::default()
+        .plugin(tauri_plugin_autostart::init(
+            MacosLauncher::AppleScript,
+            None,
+        ))
+        .invoke_handler(tauri::generate_handler![change_autostart,])
+        .setup(|app| {
+            init(app.app_handle());
+
+            enable_autostart(app);
+
+            Ok(())
+        })
+        .run(ctx)
         .expect("error while running tauri application");
 }

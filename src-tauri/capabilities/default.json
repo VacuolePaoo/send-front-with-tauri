@@ -39,6 +39,12 @@
     "dialog:allow-message",
     "dialog:allow-ask",
     "dialog:allow-confirm",
-    "notification:default"
+    "notification:default",
+    "autostart:allow-disable",
+    "autostart:deny-disable",
+    "autostart:allow-enable",
+    "autostart:deny-enable",
+    "autostart:allow-is-enabled",
+    "autostart:deny-is-enabled"
   ]
 }
