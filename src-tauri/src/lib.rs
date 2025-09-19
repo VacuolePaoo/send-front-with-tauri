@@ -8,6 +8,10 @@ use tauri_plugin_decorum::WebviewWindowExt;
 
 pub mod plugins;
 
+// 引入后端命令
+mod tauri_commands;
+use tauri_commands::*;
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let mut builder = tauri::Builder::default()
@@ -33,7 +37,38 @@ pub fn run() {
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_window_state::Builder::default().build())
         .plugin(tauri_plugin_dialog::init())
-        .invoke_handler(tauri::generate_handler![])
+        // 注册后端命令
+        .invoke_handler(tauri::generate_handler![
+            // Autostart commands
+            change_autostart,
+            // Gateway core commands
+            start_gateway,
+            stop_gateway,
+            restart_gateway,
+            get_gateway_status,
+            // Configuration commands
+            get_gateway_config,
+            update_gateway_config,
+            // Directory commands
+            mount_directory,
+            unmount_directory,
+            list_mounted_directories,
+            // Network commands
+            get_network_status,
+            get_network_interfaces,
+            // Performance commands
+            get_performance_report,
+            // Cache commands
+            get_cache_stats,
+            clear_cache,
+            // Security commands
+            get_security_config,
+            update_security_config,
+            // Registry commands
+            get_registry_entries,
+            add_registry_entry,
+            remove_registry_entry,
+        ])
         .setup(|app| {
             // Create a custom titlebar for main window
             // On Windows this hides decoration and creates custom window controls
@@ -54,26 +89,5 @@ pub fn run() {
             Ok(())
         })
         .run(tauri::generate_context!())
-        .expect("error while running tauri application");
-}
-
-#[cfg_attr(mobile, tauri::mobile_entry_point)]
-pub fn run() {
-    let mut ctx = tauri::generate_context!();
-
-    tauri::Builder::default()
-        .plugin(tauri_plugin_autostart::init(
-            MacosLauncher::AppleScript,
-            None,
-        ))
-        .invoke_handler(tauri::generate_handler![change_autostart,])
-        .setup(|app| {
-            init(app.app_handle());
-
-            enable_autostart(app);
-
-            Ok(())
-        })
-        .run(ctx)
         .expect("error while running tauri application");
 }

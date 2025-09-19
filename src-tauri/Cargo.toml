@@ -30,15 +30,14 @@ tauri-plugin-decorum = "1.1.1"
 tauri-plugin-devtools = "2.0.1"
 tauri-plugin-log = "2.7.0"
 tauri-plugin-dialog = "2.4.0"
-tauri-plugin-single-instance = "2.3.2"
-tauri-plugin-notification = "2"
-[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
 tauri-plugin-single-instance = "2.3.4"
-
+tauri-plugin-notification = "2"
+tauri-plugin-autostart = "2"
 
 serde_json = "1.0.143"
+serde = { version = "1.0.217", features = ["derive"] }
 log = "0.4.28"
-tauri-plugin-autostart = "2"
+wdic-gateway = { path = "../../" }
 
 [profile.dev]
 incremental = true # Compile your binary in smaller steps.
